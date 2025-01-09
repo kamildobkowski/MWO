@@ -1,0 +1,11 @@
+@startuml
+left to right direction
+
+actor User
+actor Administrator
+
+rectangle "System biletomatu ZTM" {
+User --> (Zakup Biletu)
+Administrator --> (Zarządzanie Ofertą)
+}
+@enduml
