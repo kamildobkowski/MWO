@@ -6,6 +6,8 @@ actor Administrator
 
 rectangle "System biletomatu ZTM" {
 User --> (Zakup Biletu)
+User --> (Dokonywanie płatności)
+Administrator --> (Zdalna aktualizacja oprogramowania)
 Administrator --> (Zarządzanie Ofertą)
 }
 @enduml
