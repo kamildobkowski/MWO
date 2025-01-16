@@ -38,7 +38,7 @@ Centralny --> Administrator: Potwierdzenie zarządzania ofertą
 @enduml
 
 @startuml
-title Dokonywanie płatności
+title Dokonywanie płatności z obsługą wielokrotnych prób
 
 actor User
 
@@ -51,23 +51,26 @@ activate Biletomat
 Biletomat -> User: Poproś o dane płatności
 deactivate Biletomat
 
-activate User
-User -> Biletomat: Wprowadź dane płatności
-deactivate User
+loop Do wprowadzenia danych płatności
+    activate User
+    User -> Biletomat: Wprowadź dane płatności
+    deactivate User
 
-activate Biletomat
-Biletomat -> Transakcyjny: Przetwórz płatność
-activate Transakcyjny
+    activate Biletomat
+    Biletomat -> Transakcyjny: Przetwórz płatność
+    activate Transakcyjny
 
-Transakcyjny --> Biletomat: Status transakcji (sukces/niepowodzenie)
-deactivate Transakcyjny
+    Transakcyjny --> Biletomat: Status transakcji (sukces/niepowodzenie)
+    deactivate Transakcyjny
 
-alt Sukces transakcji
-    Biletomat -> User: Potwierdzenie płatności
-else Niepowodzenie transakcji
-    Biletomat -> User: Komunikat o błędzie
+    alt Sukces transakcji
+        Biletomat -> User: Potwierdzenie płatności
+        break
+    else Niepowodzenie transakcji
+        Biletomat -> User: Komunikat o błędzie
+    end
+    deactivate Biletomat
 end
-deactivate Biletomat
 @enduml
 @startuml
 title Zdalna aktualizacja oprogramowania biletomatu
